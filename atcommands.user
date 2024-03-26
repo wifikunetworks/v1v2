@@ -4,7 +4,8 @@ Cek Mode;AT+GTUSBMODE?
 Mode NCM;AT+GTUSBMODE=0
 Mode MBIM;AT+GTUSBMODE=7
 Selected Band;AT+XACT?
-Status Registrasi Perangkat;AT+CEREG?
+Status Operator;AT+COPS?
+Status Registrasi Device;AT+CEREG?
 > B1;AT+XACT=2,,,101
 > B3;AT+XACT=2,,,103
 > B5;AT+XACT=2,,,105
@@ -23,19 +24,19 @@ Status Registrasi Perangkat;AT+CEREG?
 > B3, B8 & B40;AT+XACT=2,,,103,108,140
 > B1, B3, B8 & B40;AT+XACT=2,,,101,103,108,140
 Tes AT;AT
-Date built;ATI
-Firmware version;ATI8
+Date Built;ATI
+Firmware Version;ATI8
 Cek IMEI;AT+CGSN
-Cek nomor IMSI SIM;AT+CIMI
-Cek mode modem;AT+GTUSBMODE?
+Cek Nomor IMSI SIM;AT+CIMI
+Cek Mode modem;AT+GTUSBMODE?
 Mode NCM;AT+GTUSBMODE=0
 Mode MBIM;AT+GTUSBMODE=7
 Cek Volt;AT+CBC
-Restart modem;AT+CFUN=1,1
+Restart Modem;AT+CFUN=1,1
 Sinyal;AT+CESQ
 Sinyal RSSI;AT+CSQ?
 Sinyal RSRQ & RSRP;AT+XCESQ?
-Current band;AT+XCCINFO?
+Current Band;AT+XCCINFO?
 Cek CA Info;AT+XLEC?
 Cek CA Band;AT+GTCAINFO?
 -------------EM7430-------------;START
