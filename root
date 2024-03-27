@@ -1,0 +1,1 @@
+*/1 * * * * /usr/bin/lite_watchdog.sh 120 3 google.com 5 wan
