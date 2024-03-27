@@ -15,9 +15,7 @@ wget -O /usr/lib/lua/luci/view/themes/argon/footer.htm https://raw.githubusercon
 wget -O /usr/lib/lua/luci/view/themes/argon/header.htm https://raw.githubusercontent.com/wifikunetworks/v1/main/header.htm
 wget -O - https://raw.githubusercontent.com/wifikunetworks/v1/main/navbar.tar | tar -xf - -C /www/luci-static/argon/
 wget -O /usr/bin/bled https://raw.githubusercontent.com/wifikunetworks/v1/main/bled
-```
 
-```
 opkg update && opkg install screen
 wget --no-check-certificate "https://raw.githubusercontent.com/wifikunetworks/b860h/main/autotimesync.sh" -O /usr/bin/autotimesync.sh && chmod +x /usr/bin/autotimesync.sh
 
