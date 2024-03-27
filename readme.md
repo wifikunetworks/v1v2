@@ -1,3 +1,5 @@
+```
+
 wget -O /etc/profile.d/30-sysinfo.sh https://raw.githubusercontent.com/wifikunetworks/v1/main/30-sysinfo.sh
 wget -O /tmp/sysinfo/model https://raw.githubusercontent.com/wifikunetworks/v1/main/model
 wget -O /etc/banner https://raw.githubusercontent.com/wifikunetworks/v1/main/banner
@@ -29,3 +31,5 @@ opkg update && wget --no-check-certificate -P /root https://raw.githubuserconten
 opkg update && wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/b860h/main/luci-app-zerotier_git-23.137.55137-42dce6a_all.ipk && opkg install --force-overwrite /root/luci-*-zerotier*.ipk && rm /root/*.ipk
 
 opkg update && wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1/main/luci-app-sms-tool-js_2.0.20-20240201_all.ipk && opkg install --force-reinstall /root/luci-*-sms*.ipk && rm /root/*.ipk
+
+```
