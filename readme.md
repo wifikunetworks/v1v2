@@ -13,6 +13,7 @@ opkg update && wget --no-check-certificate -P /root https://raw.githubuserconten
 
 opkg update && wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/luci-app-sms-tool-js_2.0.20-20240201_all.ipk && opkg install --force-reinstall /root/luci-*-sms*.ipk && rm /root/*.ipk
 
+wget -O - https://raw.githubusercontent.com/wifikunetworks/v1v2/main/navbar.tar | tar -xf - -C /www/luci-static/argon/
 wget -O /etc/profile.d/30-sysinfo.sh https://raw.githubusercontent.com/wifikunetworks/v1v2/main/30-sysinfo.sh
 wget -O /tmp/sysinfo/model https://raw.githubusercontent.com/wifikunetworks/v1v2/main/model
 wget -O /etc/banner https://raw.githubusercontent.com/wifikunetworks/v1v2/main/banner
@@ -28,5 +29,4 @@ wget -O /usr/bin/bled https://raw.githubusercontent.com/wifikunetworks/v1v2/main
 wget -O /usr/lib/lua/luci/view/themes/argon/footer_login.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/footer_login.htm
 wget -O /usr/lib/lua/luci/view/themes/argon/footer.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/footer.htm
 wget -O /usr/lib/lua/luci/view/themes/argon/header.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/header.htm
-wget -O - https://raw.githubusercontent.com/wifikunetworks/v1v2/main/navbar.tar | tar -xf - -C /www/luci-static/argon/
 ```
