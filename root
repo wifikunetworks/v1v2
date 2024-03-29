@@ -1,2 +1,2 @@
-*/1 * * * * /usr/bin/lite_watchdog.sh 120 3 www.gstatic.com 3 wan
+*/1 * * * * /usr/bin/lite_watchdog.sh 120 3 74.125.24.94 3 wan
 */5 * * * * /www/vnstati/vnstati.sh >/dev/null 2>&1
