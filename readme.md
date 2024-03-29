@@ -25,9 +25,9 @@ wget -O /www/luci-static/argon/brand.png https://raw.githubusercontent.com/wifik
 wget -O /etc/rc.local https://raw.githubusercontent.com/wifikunetworks/v1v2/main/rc.local
 wget -O /etc/crontabs/root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/root
 wget -O /usr/bin/bled https://raw.githubusercontent.com/wifikunetworks/v1v2/main/bled && chmod +x /usr/bin/bled
+wget -O - https://raw.githubusercontent.com/wifikunetworks/v1v2/main/navbar.tar | tar -xf - -C /www/luci-static/argon/
 wget -O /usr/lib/lua/luci/view/themes/argon/footer_login.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/footer_login.htm
 wget -O /usr/lib/lua/luci/view/themes/argon/footer.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/footer.htm
 wget -O /usr/lib/lua/luci/view/themes/argon/header.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/header.htm
-wget -O - https://raw.githubusercontent.com/wifikunetworks/v1v2/main/navbar.tar | tar -xf - -C /www/luci-static/argon/
 wget -O  /usr/bin/lite_watchdog.sh https://raw.githubusercontent.com/wifikunetworks/v1v2/main/lite_watchdog.sh && chmod +x /usr/bin/lite_watchdog.sh
 ```
