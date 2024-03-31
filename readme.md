@@ -8,8 +8,8 @@ wget --no-check-certificate https://install.speedtest.net/app/cli/ookla-speedtes
 # INSTALL TAILSCALE
 wget --no-check-certificate -P /root https://github.com/wifikunetworks/v1v2/raw/main/luci-app-tailscale_1.0.5_all.ipk && opkg install --force-overwrite /root/luci-*-tailscale*.ipk && rm /root/*.ipk
 
-# INSTALL SCREEN
-opkg install screen
+# INSTALL ANTI BENGONG
+wget --no-check-certificate -N -P /www/antibengong/ https://raw.githubusercontent.com/wifikunetworks/antibengong/main/final.sh && chmod +x /www/antibengong/final.sh
 
 # INSTALL CONNECTION MONITOR
 opkg remove --force-remove luci-app-lite-watchdog && rm /etc/modem/log.txt && wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/luci-app-lite-watchdog_1.0.13-20231207_all.ipk && opkg install --force-reinstall /root/luci-*-watchdog*.ipk && rm /root/*.ipk
