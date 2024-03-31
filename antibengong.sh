@@ -21,16 +21,21 @@ RESTART_TIMEOUT=$((60))  # 1 menit
 # Port untuk mengirim perintah ke modem
 MODEM_PORT="/dev/ttyACM2"
 
+# Nama interface yang ingin di-restart
+INTERFACE="mm"
+
 # Fungsi untuk memasukkan log
 log() {
     echo "$(date +'%A %H:%M:%S %d-%m-%Y') $1" >> $LOG_FILE
 }
 
-# Fungsi untuk merestart modem
-restart_modem() {
-    log "Restarting modem..."
-    # Mengirim perintah restart ke modem melalui port
-    echo -e "at+cfun=1,1\r\n" > $MODEM_PORT
+# Fungsi untuk merestart modem dan interface
+restart_modem_and_interface() {
+    log "Restarting modem and interface..."
+    # Merestart modem
+    echo -e "at+cfun=1,1\r" > $MODEM_PORT
+    # Merestart interface
+    ifdown $INTERFACE && ifup $INTERFACE
     # Tunggu sejenak untuk memastikan modem telah merespon kembali
     sleep 10
 }
@@ -52,8 +57,8 @@ check_health() {
             log "Status: $status > Ping HTTP Failed"
             ((offline_count++))
             if (( offline_count >= offline_threshold )); then
-                restart_modem
-                log "Modem restarted"
+                restart_modem_and_interface
+                log "Modem and interface restarted"
                 offline_count=0
             fi
         fi
