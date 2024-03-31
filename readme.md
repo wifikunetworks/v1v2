@@ -1,16 +1,23 @@
 ```
+# INSTALL AUTO TIME SYNC
 opkg update && wget --no-check-certificate "https://raw.githubusercontent.com/wifikunetworks/v1v2/main/autotimesync.sh" -O /usr/bin/autotimesync.sh && chmod +x /usr/bin/autotimesync.sh
 
+# INSTALL SPEEDTEST
 wget --no-check-certificate https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-aarch64.tgz -O /tmp/speedtest.tgz && tar -xzvf /tmp/speedtest.tgz -C /usr/bin/ && chmod +x /usr/bin/speedtest
 
+# INSTALL TAILSCALE
 wget --no-check-certificate -P /root https://github.com/wifikunetworks/v1v2/raw/main/luci-app-tailscale_1.0.5_all.ipk && opkg install --force-overwrite /root/luci-*-tailscale*.ipk && rm /root/*.ipk
 
+# INSTALL SCREEN
 opkg install screen
 
-wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/luci-app-lite-watchdog_1.0.14-20240101_all.ipk && opkg install --force-overwrite /root/luci-*-watchdog*.ipk && rm /root/*.ipk
+# INSTALL CONNECTION MONITOR
+opkg remove --force-remove luci-app-lite-watchdog && rm /etc/modem/log.txt && wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/luci-app-lite-watchdog_1.0.13-20231207_all.ipk && opkg install --force-reinstall /root/luci-*-watchdog*.ipk && rm /root/*.ipk
 
+# INSTALL ZEROTIER
 opkg remove --force-remove luci-app-zerotier && wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/luci-app-zerotier_git-23.137.55137-42dce6a_all.ipk && opkg install --force-overwrite /root/luci-*-zerotier*.ipk && rm /root/*.ipk
 
+# INSTALL SMS TOOL
 opkg remove --force-remove luci-app-sms-tool-js && rm /etc/config/sms_tool_js && wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/luci-app-sms-tool-js_2.0.20-20240201_all.ipk && opkg install --force-reinstall /root/luci-*-sms*.ipk && rm /root/*.ipk
 
 
