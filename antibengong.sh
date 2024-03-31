@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Lokasi file log
+LOG_FILE="/usr/bin/bengong.txt"
+
 # URL untuk memeriksa kesehatan proxy
 HEALTH_CHECK_URL="http://www.gstatic.com/generate_204"
 
@@ -18,39 +21,39 @@ RESTART_TIMEOUT=$((60 * 1))  # 1 menit
 # Port untuk mengirim perintah ke modem
 MODEM_PORT="/dev/ttyACM2"
 
+# Fungsi untuk memasukkan log
+log() {
+    echo "$(date +'%A %H:%M:%S %d-%m-%Y') Status: $1 > Ping $2" >> $LOG_FILE
+}
+
 # Fungsi untuk memeriksa kesehatan proxy
 check_health() {
-    local healthy_count=0
+    local ping_result
+    local status
     for ((i = 0; i < $NUM_CHECKS; i++)); do
-        if curl --silent --max-time $HEALTH_CHECK_TIMEOUT --head $HEALTH_CHECK_URL | grep "HTTP/1.1 204 No Content" > /dev/null; then
-            healthy_count=$((healthy_count + 1))
+        ping_result=$(ping -c 1 $HEALTH_CHECK_URL | grep "bytes from" | awk '{print $8}' | cut -d "=" -f 2)
+        if [[ -n "$ping_result" ]]; then
+            status="ONLINE"
+            log "$status" "$ping_result ms"
+        else
+            status="OFFLINE"
+            log "$status" "Ping Failed"
         fi
         sleep $CHECK_INTERVAL
     done
-    if [ $healthy_count -lt $NUM_CHECKS ]; then
-        return 1
-    else
-        return 0
-    fi
 }
 
 # Fungsi untuk merestart modem
 restart_modem() {
-    echo "Restarting modem..."
+    log "Restarting modem..." ""
     # Mengirim perintah restart ke modem melalui port
     echo -e "at+cfun=1,1\r" > $MODEM_PORT
 }
 
 # Pemanggilan fungsi untuk memeriksa kesehatan proxy
-if ! check_health; then
-    echo "Proxy tidak sehat. Akan memeriksa ulang setelah $RESTART_TIMEOUT detik."
-    sleep $RESTART_TIMEOUT
-    if ! check_health; then
-        echo "Proxy masih tidak sehat setelah restart. Akan merestart modem."
-        restart_modem
-    else
-        echo "Proxy kembali sehat setelah restart."
-    fi
-else
-    echo "Proxy sehat."
+check_health
+
+# Jika proxy masih OFFLINE setelah beberapa cek, restart modem
+if grep -q "OFFLINE" "$LOG_FILE"; then
+    restart_modem
 fi
