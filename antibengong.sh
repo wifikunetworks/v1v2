@@ -28,16 +28,16 @@ log() {
 
 # Fungsi untuk memeriksa kesehatan proxy
 check_health() {
-    local ping_result
+    local http_code
     local status
     for ((i = 0; i < $NUM_CHECKS; i++)); do
-        ping_result=$(ping -c 1 $HEALTH_CHECK_URL | grep "bytes from" | awk '{print $8}' | cut -d "=" -f 2)
-        if [[ -n "$ping_result" ]]; then
+        http_code=$(curl --silent --max-time $HEALTH_CHECK_TIMEOUT --head $HEALTH_CHECK_URL | grep "HTTP/" | awk '{print $2}')
+        if [[ "$http_code" == "204" ]]; then
             status="ONLINE"
-            log "$status" "$ping_result ms"
+            log "$status" "204"
         else
             status="OFFLINE"
-            log "$status" "Ping Failed"
+            log "$status" "HTTP Failed"
         fi
         sleep $CHECK_INTERVAL
     done
