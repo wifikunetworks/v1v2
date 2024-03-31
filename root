@@ -1,3 +1,1 @@
-* * * * * /usr/bin/antibengong.sh >/dev/null 2>&1
 */5 * * * * /www/vnstati/vnstati.sh >/dev/null 2>&1
-*/1 * * * * /usr/bin/lite_watchdog.sh 120 3 www.gstatic.com 59 wan
