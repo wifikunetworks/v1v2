@@ -6,22 +6,22 @@ LOG_FILE="/usr/bin/antibengong/log.txt"
 # Function to log status
 log_status() {
     echo "$(date +"%A %d %B %Y %T")  Status: $1" >> "$LOG_FILE"
+    # Flush buffer
+    sync
 }
 
 # Function to restart modem
 restart_modem() {
     echo "Restarting modem..."
-    # Insert command to restart modem here
-    # Example:
-/usr/bin/at -e 'echo "AT+CFUN=1,1" > /dev/ttyACM2'
+    # Command to restart modem
+    echo "AT+CFUN=1,1" > /dev/ttyACM2
 }
 
 # Function to restart modem interface
 restart_modem_interface() {
     echo "Restarting modem interface..."
-    # Insert command to restart modem interface here
-    # Example:
-/sbin/ifdown mm && /sbin/ifup mm
+    # Command to restart modem interface
+    /sbin/ifdown mm && /sbin/ifup mm
 }
 
 # Main loop
