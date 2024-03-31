@@ -6,17 +6,14 @@ LOG_FILE="/usr/bin/bengong.txt"
 # URL untuk memeriksa kesehatan proxy
 HEALTH_CHECK_URL="http://www.gstatic.com/generate_204"
 
-# Jumlah pengecekan yang diperlukan untuk mengambil keputusan
-NUM_CHECKS=$((60 / 3))  # 1 menit / 3 detik
-
 # Waktu antara setiap pengecekan (dalam detik)
 CHECK_INTERVAL=3
 
-# Waktu untuk menunggu sebelum memutuskan bahwa proxy tidak sehat (dalam detik)
-HEALTH_CHECK_TIMEOUT=3
-
 # Waktu yang dibutuhkan untuk merestart modem setelah tidak ada respon (dalam detik)
 RESTART_TIMEOUT=$((60))  # 1 menit
+
+# Jumlah ping yang gagal yang harus dilalui sebelum merestart modem dan interface
+PING_FAILURE_THRESHOLD=$((RESTART_TIMEOUT / CHECK_INTERVAL))
 
 # Port untuk mengirim perintah ke modem
 MODEM_PORT="/dev/ttyACM2"
@@ -44,22 +41,21 @@ restart_modem_and_interface() {
 check_health() {
     local http_code
     local status
-    local offline_count=0
-    local offline_threshold=$((RESTART_TIMEOUT / HEALTH_CHECK_TIMEOUT))
-    for ((i = 0; i < $NUM_CHECKS; i++)); do
-        http_code=$(curl --silent --max-time $HEALTH_CHECK_TIMEOUT --head $HEALTH_CHECK_URL | grep "HTTP/" | awk '{print $2}')
+    local ping_failure_count=0
+    while true; do
+        http_code=$(curl --silent --max-time 10 --head $HEALTH_CHECK_URL | grep "HTTP/" | awk '{print $2}')
         if [[ "$http_code" == "204" ]]; then
             status="ONLINE"
             log "Status: $status > Ping 204"
-            offline_count=0
+            ping_failure_count=0
         else
             status="OFFLINE"
             log "Status: $status > Ping HTTP Failed"
-            ((offline_count++))
-            if (( offline_count >= offline_threshold )); then
+            ((ping_failure_count++))
+            if (( ping_failure_count >= PING_FAILURE_THRESHOLD )); then
                 restart_modem_and_interface
                 log "Modem and interface restarted"
-                offline_count=0
+                ping_failure_count=0
             fi
         fi
         sleep $CHECK_INTERVAL
