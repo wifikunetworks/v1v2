@@ -16,18 +16,19 @@ restart_modem_interface() {
 
 # Function to log the check result
 log_check_result() {
-    echo "$(date +"%A %d %B %Y %T")  Status: $1 > Ping $2" >> /usr/bin/antibengong/log.txt
+    echo "$(date +"%A %d %B %Y %T")  Status: $1 > HTTP Status Code: $2" >> /usr/bin/antibengong/log.txt
 }
 
 # Main function to perform health check
 health_check() {
     while true; do
-        if ping -q -w 1 -c 1 "http://www.gstatic.com/generate_204" > /dev/null; then
-            echo "$(date +"%A %d %B %Y %T")  Status: ONLINE > Ping $(ping -q -w 1 -c 1 "http://www.gstatic.com/generate_204" | grep -oP '(?<=time=)[0-9]+')" 
-            log_check_result "ONLINE" "$(ping -q -w 1 -c 1 "http://www.gstatic.com/generate_204" | grep -oP '(?<=time=)[0-9]+')ms"
+        response=$(curl -s -o /dev/null -w "%{http_code}" "http://www.gstatic.com/generate_204")
+        if [ $response -eq 204 ]; then
+            echo "$(date +"%A %d %B %Y %T")  Status: ONLINE > HTTP Status Code: $response" 
+            log_check_result "ONLINE" "$response"
         else
-            echo "$(date +"%A %d %B %Y %T")  Status: OFFLINE > Ping Failed" 
-            log_check_result "OFFLINE" "Failed"
+            echo "$(date +"%A %d %B %Y %T")  Status: OFFLINE > HTTP Status Code: $response" 
+            log_check_result "OFFLINE" "$response"
             restart_modem
             sleep 5
             restart_modem_interface
