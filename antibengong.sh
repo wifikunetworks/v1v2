@@ -6,6 +6,12 @@ LOG_FILE="/usr/bin/bengong.txt"
 # URL untuk memeriksa kesehatan proxy
 HEALTH_CHECK_URL="http://www.gstatic.com/generate_204"
 
+# Jumlah pengecekan yang diperlukan untuk mengambil keputusan
+NUM_CHECKS=$((60 / 3))  # 1 menit / 3 detik
+
+# Waktu antara setiap pengecekan (dalam detik)
+CHECK_INTERVAL=3
+
 # Waktu untuk menunggu sebelum memutuskan bahwa proxy tidak sehat (dalam detik)
 HEALTH_CHECK_TIMEOUT=3
 
@@ -32,7 +38,8 @@ check_health() {
     local http_code
     local status
     local offline_count=0
-    while true; do
+    local offline_threshold=$((RESTART_TIMEOUT / HEALTH_CHECK_TIMEOUT))
+    for ((i = 0; i < $NUM_CHECKS; i++)); do
         http_code=$(curl --silent --max-time $HEALTH_CHECK_TIMEOUT --head $HEALTH_CHECK_URL | grep "HTTP/" | awk '{print $2}')
         if [[ "$http_code" == "204" ]]; then
             status="ONLINE"
@@ -42,12 +49,12 @@ check_health() {
             status="OFFLINE"
             log "$status" "HTTP Failed"
             ((offline_count++))
-            if (( offline_count >= RESTART_TIMEOUT / HEALTH_CHECK_TIMEOUT )); then
+            if (( offline_count >= offline_threshold )); then
                 restart_modem
                 offline_count=0
             fi
         fi
-        sleep $HEALTH_CHECK_TIMEOUT
+        sleep $CHECK_INTERVAL
     done
 }
 
