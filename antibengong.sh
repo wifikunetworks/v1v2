@@ -30,7 +30,7 @@ log() {
 restart_modem() {
     log "Restarting modem..."
     # Mengirim perintah restart ke modem melalui port
-    echo -e "at+cfun=1,1\r" > $MODEM_PORT
+    echo -e "at+cfun=1,1\r\n" > $MODEM_PORT
     # Tunggu sejenak untuk memastikan modem telah merespon kembali
     sleep 10
 }
