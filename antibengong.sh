@@ -31,6 +31,8 @@ restart_modem() {
     log "Restarting modem..." ""
     # Mengirim perintah restart ke modem melalui port
     echo -e "at+cfun=1,1\r" > $MODEM_PORT
+    # Tunggu sejenak untuk memastikan modem telah merespon kembali
+    sleep 10
 }
 
 # Fungsi untuk melakukan pengecekan kesehatan proxy
@@ -51,6 +53,7 @@ check_health() {
             ((offline_count++))
             if (( offline_count >= offline_threshold )); then
                 restart_modem
+                log "Modem restarted" ""
                 offline_count=0
             fi
         fi
