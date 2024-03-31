@@ -26,14 +26,27 @@ restart_modem_interface() {
 while true; do
     # Check internet connectivity
     if wget -q --spider http://www.gstatic.com/generate_204; then
-        log_status "ONLINE"
+        if ! grep -q "ONLINE" "$LOG_FILE"; then
+            log_status "ONLINE"
+        fi
     else
-        log_status "OFFLINE"
-        # Restart modem and interface
-        log_status "OFFLINE - Restarting modem and interface..."
-        restart_modem
-        sleep 5
-        restart_modem_interface
+        if ! grep -q "OFFLINE" "$LOG_FILE"; then
+            log_status "OFFLINE"
+        fi
+        # Sleep for 1 minute
+        sleep 60
+        # Check internet connectivity again after sleeping
+        if wget -q --spider http://www.gstatic.com/generate_204; then
+            log_status "ONLINE"
+        else
+            log_status "OFFLINE - Restarting modem and interface..."
+            # Restart modem
+            restart_modem
+            # Sleep for a few seconds before restarting interface
+            sleep 5
+            # Restart modem interface
+            restart_modem_interface
+        fi
     fi
     # Wait for 3 seconds before the next check
     sleep 3
