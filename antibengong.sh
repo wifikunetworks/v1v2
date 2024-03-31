@@ -1,45 +1,51 @@
 #!/bin/bash
 
+# Path to log file
+LOG_FILE="/usr/bin/antibengong/log.txt"
+
+# Function to log status
+log_status() {
+    echo "$(date +"%A %d %B %Y %T")  Status: $1" >> "$LOG_FILE"
+}
+
 # Function to restart modem
 restart_modem() {
     echo "Restarting modem..."
-    # Add your command to restart modem here
-    # Example: at+cfun=1,1 > /dev/ttyACM2
+    # Insert command to restart modem here
+    # Example:
+/usr/bin/at -e 'echo "AT+CFUN=1,1" > /dev/ttyACM2'
 }
 
 # Function to restart modem interface
 restart_modem_interface() {
     echo "Restarting modem interface..."
-    # Add your command to restart modem interface here
-    # Example: ifdown mm && ifup mm
+    # Insert command to restart modem interface here
+    # Example:
+/sbin/ifdown mm && /sbin/ifup mm
 }
 
-# Function to log the check result
-log_check_result() {
-    echo "$(date +"%A %d %B %Y %T")  Status: $1 > HTTP Status Code: $2" >> /usr/bin/antibengong/log.txt
-}
-
-# Main function to perform health check
-health_check() {
-    while true; do
-        response=$(curl -s -o /dev/null -w "%{http_code}" "http://www.gstatic.com/generate_204")
-        if [ $response -eq 204 ]; then
-            echo "$(date +"%A %d %B %Y %T")  Status: ONLINE > HTTP Status Code: $response" 
-            log_check_result "ONLINE" "$response"
+# Main loop
+while true; do
+    # Check internet connectivity
+    if wget -q --spider http://www.gstatic.com/generate_204; then
+        log_status "ONLINE"
+    else
+        log_status "OFFLINE"
+        # Sleep for 1 minute
+        sleep 60
+        # Check internet connectivity again after sleeping
+        if wget -q --spider http://www.gstatic.com/generate_204; then
+            log_status "ONLINE"
         else
-            echo "$(date +"%A %d %B %Y %T")  Status: OFFLINE > HTTP Status Code: $response" 
-            log_check_result "OFFLINE" "$response"
+            log_status "OFFLINE - Restarting modem and interface..."
+            # Restart modem
             restart_modem
+            # Sleep for a few seconds before restarting interface
             sleep 5
+            # Restart modem interface
             restart_modem_interface
         fi
-        sleep 3
-    done
-}
-
-# Check if log file exists, if not create it
-mkdir -p /usr/bin/antibengong
-touch /usr/bin/antibengong/log.txt
-
-# Start health check
-health_check
+    fi
+    # Wait for 3 seconds before the next check
+    sleep 3
+done
