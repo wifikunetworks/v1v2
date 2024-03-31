@@ -23,12 +23,12 @@ MODEM_PORT="/dev/ttyACM2"
 
 # Fungsi untuk memasukkan log
 log() {
-    echo "$(date +'%A %H:%M:%S %d-%m-%Y') Status: $1 > Ping $2" >> $LOG_FILE
+    echo "$(date +'%A %H:%M:%S %d-%m-%Y') $1" >> $LOG_FILE
 }
 
 # Fungsi untuk merestart modem
 restart_modem() {
-    log "Restarting modem..." ""
+    log "Restarting modem..."
     # Mengirim perintah restart ke modem melalui port
     echo -e "at+cfun=1,1\r" > $MODEM_PORT
     # Tunggu sejenak untuk memastikan modem telah merespon kembali
@@ -45,15 +45,15 @@ check_health() {
         http_code=$(curl --silent --max-time $HEALTH_CHECK_TIMEOUT --head $HEALTH_CHECK_URL | grep "HTTP/" | awk '{print $2}')
         if [[ "$http_code" == "204" ]]; then
             status="ONLINE"
-            log "$status" "204"
+            log "Status: $status > Ping 204"
             offline_count=0
         else
             status="OFFLINE"
-            log "$status" "HTTP Failed"
+            log "Status: $status > Ping HTTP Failed"
             ((offline_count++))
             if (( offline_count >= offline_threshold )); then
                 restart_modem
-                log "Modem restarted" ""
+                log "Modem restarted"
                 offline_count=0
             fi
         fi
