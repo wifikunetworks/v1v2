@@ -1,66 +1,44 @@
 #!/bin/bash
 
-# Lokasi file log
-LOG_FILE="/usr/bin/bengong.txt"
-
-# URL untuk memeriksa kesehatan proxy
-HEALTH_CHECK_URL="http://www.gstatic.com/generate_204"
-
-# Waktu antara setiap pengecekan (dalam detik)
-CHECK_INTERVAL=3
-
-# Waktu yang dibutuhkan untuk merestart modem setelah tidak ada respon (dalam detik)
-RESTART_TIMEOUT=$((60))  # 1 menit
-
-# Jumlah ping yang gagal yang harus dilalui sebelum merestart modem dan interface
-PING_FAILURE_THRESHOLD=$((RESTART_TIMEOUT / CHECK_INTERVAL))
-
-# Port untuk mengirim perintah ke modem
-MODEM_PORT="/dev/ttyACM2"
-
-# Nama interface yang ingin di-restart
-INTERFACE="mm"
-
-# Fungsi untuk memasukkan log
-log() {
-    echo "$(date +'%A %H:%M:%S %d-%m-%Y') $1" >> $LOG_FILE
+# Function to restart modem
+restart_modem() {
+    echo "Restarting modem..."
+    # Add your command to restart modem here
+    # Example: at+cfun=1,1 > /dev/ttyACM2
 }
 
-# Fungsi untuk merestart modem dan interface
-restart_modem_and_interface() {
-    log "Restarting modem and interface..."
-    # Merestart modem
-    echo -e "at+cfun=1,1\r" > $MODEM_PORT
-    # Merestart interface
-    ifdown $INTERFACE && ifup $INTERFACE
-    # Tunggu sejenak untuk memastikan modem telah merespon kembali
-    sleep 10
+# Function to restart modem interface
+restart_modem_interface() {
+    echo "Restarting modem interface..."
+    # Add your command to restart modem interface here
+    # Example: ifdown mm && ifup mm
 }
 
-# Fungsi untuk melakukan pengecekan kesehatan proxy
-check_health() {
-    local http_code
-    local status
-    local ping_failure_count=0
+# Function to log the check result
+log_check_result() {
+    echo "$(date +"%A %d %B %Y %T")  Status: $1 > Ping $2" >> /usr/bin/antibengong/log.txt
+}
+
+# Main function to perform health check
+health_check() {
     while true; do
-        http_code=$(curl --silent --max-time 10 --head $HEALTH_CHECK_URL | grep "HTTP/" | awk '{print $2}')
-        if [[ "$http_code" == "204" ]]; then
-            status="ONLINE"
-            log "Status: $status > Ping 204"
-            ping_failure_count=0
+        if ping -q -w 1 -c 1 "http://www.gstatic.com/generate_204" > /dev/null; then
+            echo "$(date +"%A %d %B %Y %T")  Status: ONLINE > Ping $(ping -q -w 1 -c 1 "http://www.gstatic.com/generate_204" | grep -oP '(?<=time=)[0-9]+')" 
+            log_check_result "ONLINE" "$(ping -q -w 1 -c 1 "http://www.gstatic.com/generate_204" | grep -oP '(?<=time=)[0-9]+')ms"
         else
-            status="OFFLINE"
-            log "Status: $status > Ping HTTP Failed"
-            ((ping_failure_count++))
-            if (( ping_failure_count >= PING_FAILURE_THRESHOLD )); then
-                restart_modem_and_interface
-                log "Modem and interface restarted"
-                ping_failure_count=0
-            fi
+            echo "$(date +"%A %d %B %Y %T")  Status: OFFLINE > Ping Failed" 
+            log_check_result "OFFLINE" "Failed"
+            restart_modem
+            sleep 5
+            restart_modem_interface
         fi
-        sleep $CHECK_INTERVAL
+        sleep 3
     done
 }
 
-# Memanggil fungsi untuk melakukan pengecekan kesehatan proxy
-check_health
+# Check if log file exists, if not create it
+mkdir -p /usr/bin/antibengong
+touch /usr/bin/antibengong/log.txt
+
+# Start health check
+health_check
