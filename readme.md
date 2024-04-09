@@ -24,22 +24,22 @@ opkg remove --force-remove luci-app-zerotier && rm /etc/config/zerotier ; wget -
 opkg remove --force-remove luci-app-sms-tool-js && rm /etc/config/sms_tool_js ; wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/luci-app-sms-tool-js_2.0.20-20240201_all.ipk && opkg install --force-reinstall /root/luci-*-sms*.ipk && rm /root/*.ipk
 
 
-wget -O /etc/profile.d/30-sysinfo.sh https://raw.githubusercontent.com/wifikunetworks/v1v2/main/30-sysinfo.sh
-wget -O /tmp/sysinfo/model https://raw.githubusercontent.com/wifikunetworks/v1v2/main/model
-wget -O /etc/banner https://raw.githubusercontent.com/wifikunetworks/v1v2/main/banner
-wget -O /etc/config/system https://raw.githubusercontent.com/wifikunetworks/v1v2/main/system
-wget -O /etc/config/wireless https://raw.githubusercontent.com/wifikunetworks/v1v2/main/wireless
-wget -O /etc/modem/atcommands.user https://raw.githubusercontent.com/wifikunetworks/v1v2/main/atcommands.user
-wget -O /etc/modem/atcmmds.user https://raw.githubusercontent.com/wifikunetworks/v1v2/main/atcmmds.user
-wget -O /etc/config/atcmds.user https://raw.githubusercontent.com/wifikunetworks/v1v2/main/atcmds.user
-wget -O /www/luci-static/material/brand.png https://raw.githubusercontent.com/wifikunetworks/v1v2/main/brand.png
-wget -O /www/luci-static/argon/brand.png https://raw.githubusercontent.com/wifikunetworks/v1v2/main/brand.png
-wget -O /etc/rc.local https://raw.githubusercontent.com/wifikunetworks/v1v2/main/rc.local
-wget -O /etc/crontabs/root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/root
-wget -O /usr/bin/bled https://raw.githubusercontent.com/wifikunetworks/v1v2/main/bled && chmod +x /usr/bin/bled
-wget -O - https://raw.githubusercontent.com/wifikunetworks/v1v2/main/navbar.tar | tar -xf - -C /www/luci-static/argon/
-wget -O /usr/lib/lua/luci/view/themes/argon/footer_login.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/footer_login.htm
-wget -O /usr/lib/lua/luci/view/themes/argon/footer.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/footer.htm
-wget -O /usr/lib/lua/luci/view/themes/argon/header.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/header.htm
-wget -O  /usr/bin/lite_watchdog.sh https://raw.githubusercontent.com/wifikunetworks/v1v2/main/lite_watchdog.sh && chmod +x /usr/bin/lite_watchdog.sh
+wget --no-check-certificate -O /etc/profile.d/30-sysinfo.sh https://raw.githubusercontent.com/wifikunetworks/v1v2/main/30-sysinfo.sh
+wget --no-check-certificate -O /tmp/sysinfo/model https://raw.githubusercontent.com/wifikunetworks/v1v2/main/model
+wget --no-check-certificate -O /etc/banner https://raw.githubusercontent.com/wifikunetworks/v1v2/main/banner
+wget --no-check-certificate -O /etc/config/system https://raw.githubusercontent.com/wifikunetworks/v1v2/main/system
+wget --no-check-certificate -O /etc/config/wireless https://raw.githubusercontent.com/wifikunetworks/v1v2/main/wireless
+wget --no-check-certificate -O /etc/modem/atcommands.user https://raw.githubusercontent.com/wifikunetworks/v1v2/main/atcommands.user
+wget --no-check-certificate -O /etc/modem/atcmmds.user https://raw.githubusercontent.com/wifikunetworks/v1v2/main/atcmmds.user
+wget --no-check-certificate -O /etc/config/atcmds.user https://raw.githubusercontent.com/wifikunetworks/v1v2/main/atcmds.user
+wget --no-check-certificate -O /www/luci-static/material/brand.png https://raw.githubusercontent.com/wifikunetworks/v1v2/main/brand.png
+wget --no-check-certificate -O /www/luci-static/argon/brand.png https://raw.githubusercontent.com/wifikunetworks/v1v2/main/brand.png
+wget --no-check-certificate -O /etc/rc.local https://raw.githubusercontent.com/wifikunetworks/v1v2/main/rc.local
+wget --no-check-certificate -O /etc/crontabs/root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/root
+wget --no-check-certificate -O /usr/bin/bled https://raw.githubusercontent.com/wifikunetworks/v1v2/main/bled && chmod +x /usr/bin/bled
+wget --no-check-certificate -O - https://raw.githubusercontent.com/wifikunetworks/v1v2/main/navbar.tar | tar -xf - -C /www/luci-static/argon/
+wget --no-check-certificate -O /usr/lib/lua/luci/view/themes/argon/footer_login.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/footer_login.htm
+wget --no-check-certificate -O /usr/lib/lua/luci/view/themes/argon/footer.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/footer.htm
+wget --no-check-certificate -O /usr/lib/lua/luci/view/themes/argon/header.htm https://raw.githubusercontent.com/wifikunetworks/v1v2/main/header.htm
+wget --no-check-certificate -O /usr/bin/lite_watchdog.sh https://raw.githubusercontent.com/wifikunetworks/v1v2/main/lite_watchdog.sh && chmod +x /usr/bin/lite_watchdog.sh
 ```
