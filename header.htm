@@ -154,8 +154,9 @@
             <a href='/cgi-bin/luci/admin/modem/luci-app-sms-tool-js'><img src="<%=media%>/navbar/sms.png" width="40" height="40"></a>
             <a href='/cgi-bin/luci/admin/modem/main'><img src="<%=media%>/navbar/signal.png" width="40" height="40"></a>
             <a href='/cgi-bin/luci/admin/status/netmon'><img src="<%=media%>/navbar/netmon.png" width="40" height="40"></a>
-            <a href='/cgi-bin/luci/admin/services/watchdog/lwdlog'><img src="<%=media%>/navbar/monitor.png" width="40" height="40"></a>
             <a href='/cgi-bin/luci/admin/status/netdata'><img src="<%=media%>/navbar/netdata.png" width="40" height="40"></a>
+            <a href='/cgi-bin/luci/admin/services/watchdog/lwdlog'><img src="<%=media%>/navbar/latency.png" width="40" height="40"></a>
+            <a href='/cgi-bin/luci/admin/network/speedtest'><img src="<%=media%>/navbar/speed11.png" width="40" height="40"></a>
             <a href='/cgi-bin/luci/admin/network/network'><img src="<%=media%>/navbar/interface.png" width="40" height="40"></a>
             <a href='/cgi-bin/luci/admin/system/reboot'><img src="<%=media%>/navbar/reboot.png" width="40" height="40"></a>
             <a href='/cgi-bin/luci/admin/system/amlogic/poweroff'><img src="<%=media%>/navbar/shutdown.png" width="40" height="40"></a>
@@ -177,12 +178,13 @@
 }
 
 #menu {
-    background: linear-gradient(90deg, #40A379, #40A379, #ffffff);
+    background: #40A379; /* Warna solid tanpa gradient */
     color: #fff;
-    height: 17px;
+    height: 30px;
     padding-left: 0px;
     border-radius: 0;
 }
+
 #menu li,
 #menu ul {
     margin: 0 auto;
@@ -199,11 +201,11 @@
 }
 #menu a {
     display: block;
-    line-height: 15px;
-    padding: 0 5px;
+    line-height: 30px;
+    padding: 0 15px;
     text-decoration: none;
     color: #fff;
-    font-size: 12px;
+    font-size: 14px;
 }
 #menu a.dropdown-arrow:after {
     content: "\25BE";
