@@ -138,6 +138,19 @@
 	class="lang_<%=luci.i18n.context.lang%> <% if node then %><%= striptags( node.title ) %><% end %> <% if luci.dispatcher.context.authsession then %>logged-in<% end %>"
 	data-page="<%= table.concat(disp.context.requestpath, "-") %>">
 <header>
+<style>
+    @media only screen and (max-width: 600px) {
+        .navbar a img {
+            width: 17px;
+            height: 17px;
+        }
+        .navbar a[href^='/cgi-bin/luci/admin/system/reboot'],
+        .navbar a[href^='/cgi-bin/luci/admin/system/amlogic/poweroff'] {
+            display: none;
+        }
+    }
+</style>
+
 <div class="fill">
     <div class="container">
         <span class="showSide"></span>
@@ -158,12 +171,12 @@
             <a href='/cgi-bin/luci/admin/services/watchdog/lwdlog'><img src="<%=media%>/navbar/latency.png" width="40" height="40"></a>
             <a href='/cgi-bin/luci/admin/network/speedtest'><img src="<%=media%>/navbar/speed11.png" width="40" height="40"></a>
             <a href='/cgi-bin/luci/admin/network/network'><img src="<%=media%>/navbar/interface.png" width="40" height="40"></a>
-            <a href='/cgi-bin/luci/admin/system/reboot'><img src="<%=media%>/navbar/reboot.png" width="40" height="40"></a>
-            <a href='/cgi-bin/luci/admin/system/amlogic/poweroff'><img src="<%=media%>/navbar/shutdown.png" width="40" height="40"></a>
+            <!-- Reboot and Shutdown links removed for mobile view -->
         </div>
         <span class="status" id="indicators"></span>
     </div>
 </div>
+
 
 <style>
 .container .navbar a {
@@ -202,7 +215,7 @@
 #menu a {
     display: block;
     line-height: 30px;
-    padding: 0 15px;
+    padding: 0 11px;
     text-decoration: none;
     color: #fff;
     font-size: 14px;
