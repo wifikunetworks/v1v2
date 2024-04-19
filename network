@@ -30,3 +30,10 @@ config interface 'mm'
 	option auth 'none'
 	option iptype 'ipv4'
 
+config interface 'zerotier'
+	option proto 'none'
+	option device 'zerrotier'
+
+config interface 'tailscale'
+	option proto 'none'
+	option device 'tailscale'
