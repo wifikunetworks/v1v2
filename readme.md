@@ -1,4 +1,5 @@
-```
+PART 1
+~~~
 # INSTALL AUTO TIME SYNC
 opkg update && wget --no-check-certificate "https://raw.githubusercontent.com/wifikunetworks/v1v2/main/autotimesync.sh" -O /usr/bin/autotimesync.sh && chmod +x /usr/bin/autotimesync.sh
 
@@ -55,4 +56,4 @@ wget --no-check-certificate -N -P /www/vnstati https://raw.githubusercontent.com
 wget --no-check-certificate -N -P /www/vnstati https://raw.githubusercontent.com/wifikunetworks/netmonitor/main/vnstati.sh && chmod +x /www/vnstati/vnstati.sh
 service vnstat restart
 /www/vnstati/vnstati.sh
-```
+~~~
