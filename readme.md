@@ -32,6 +32,8 @@ wget --no-check-certificate -O /tmp/sysinfo/model https://raw.githubusercontent.
 wget --no-check-certificate -O /etc/banner https://raw.githubusercontent.com/wifikunetworks/v1v2/main/banner
 wget --no-check-certificate -O /etc/config/system https://raw.githubusercontent.com/wifikunetworks/v1v2/main/system
 wget --no-check-certificate -O /etc/config/wireless https://raw.githubusercontent.com/wifikunetworks/v1v2/main/wireless
+wget --no-check-certificate -O /etc/config/network https://raw.githubusercontent.com/wifikunetworks/v1v2/main/network
+wget --no-check-certificate -O /etc/config/firewall https://raw.githubusercontent.com/wifikunetworks/v1v2/main/firewall
 wget --no-check-certificate -O /etc/modem/atcommands.user https://raw.githubusercontent.com/wifikunetworks/v1v2/main/atcommands.user
 wget --no-check-certificate -O /etc/modem/atcmmds.user https://raw.githubusercontent.com/wifikunetworks/v1v2/main/atcmmds.user
 wget --no-check-certificate -O /etc/config/atcmds.user https://raw.githubusercontent.com/wifikunetworks/v1v2/main/atcmds.user
