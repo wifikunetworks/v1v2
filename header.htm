@@ -133,6 +133,7 @@
 	<script src="<%=resource%>/luci.js?v=<%=ver.luciversion%>"></script>
 	<script src="<%=media%>/js/jquery.min.js?v=3.5.1"></script>
 </head>
+
 <body
 	class="lang_<%=luci.i18n.context.lang%> <% if node then %><%= striptags( node.title ) %><% end %> <% if luci.dispatcher.context.authsession then %>logged-in<% end %>"
 	data-page="<%= table.concat(disp.context.requestpath, "-") %>">
@@ -149,11 +150,13 @@
         .navbar a[href^='/cgi-bin/luci/admin/network/wireless'],
         .navbar a[href^='/cgi-bin/luci/admin/status/netmon'],
         .navbar a[href^='/cgi-bin/luci/admin/status/netdata'],
-        .navbar a[href^='/cgi-bin/luci/admin/services/watchdog/lwdlog']{
+        .navbar a[href^='/cgi-bin/luci/admin/services/watchdog/lwdlog']
+{
             display: none;
         }
     }
 </style>
+
 <div class="fill">
     <div class="container">
         <span class="showSide"></span>
@@ -180,6 +183,8 @@
         <span class="status" id="indicators"></span>
     </div>
 </div>
+
+
 <style>
 .container .navbar a {
     margin-left: 2px; /* Atur margin kiri antara setiap ikon */
@@ -330,6 +335,7 @@ function updatemenu(){1==document.getElementById("responsive-menu").checked?(doc
   <ul>
     <li><a href='/cgi-bin/luci/admin/system/system'>System</a></li>
     <li><a id="yacd" target='_blank'><p>Proxies</p></a></li><script type="text/javascript">document.getElementById("yacd").setAttribute("href", "http://" + window.location.hostname + ":9090/ui/yacd/#/proxies",);</script>
+    <li><a href='/cgi-bin/luci/admin/services/passwall/node_list'>Node</a></li>
     <li><a href='/cgi-bin/luci/admin/services/openclash/editor'>Config</a></li>
     <li><a href='/cgi-bin/luci/admin/services/openclash/config'>Manage</a></li>
     <li><a href='/cgi-bin/luci/admin/system/crontab'>Crontab</a></li>
