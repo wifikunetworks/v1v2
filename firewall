@@ -1,8 +1,8 @@
 config defaults
-	option syn_flood '1'
-	option input 'REJECT'
+	option input 'ACCEPT'
 	option output 'ACCEPT'
 	option forward 'REJECT'
+	option synflood_protect '1'
 
 config zone
 	option name 'lan'
@@ -133,3 +133,29 @@ config include 'passwall_server'
 	option path '/var/etc/passwall_server.include'
 	option reload '1'
 
+config zone
+	option name 'remote'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	list network 'zerotier'
+	list network 'tailscale'
+	option masq '1'
+	option mtu_fix '1'
+
+config forwarding
+	option src 'remote'
+	option dest 'lan'
+
+config forwarding
+	option src 'lan'
+	option dest 'remote'
+
+config redirect
+	option dest 'lan'
+	option target 'DNAT'
+	option name 'router'
+	option src 'remote'
+	option src_dport '93'
+	option dest_ip '192.168.1.111'
+	option dest_port '80'
