@@ -32,7 +32,7 @@ config interface 'mm'
 
 config interface 'zerotier'
 	option proto 'none'
-	option device 'zerrotier'
+	option device 'zerotier'
 
 config interface 'tailscale'
 	option proto 'none'
