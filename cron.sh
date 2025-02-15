@@ -8,6 +8,7 @@ CRON_CONTENT="0 * * * * /sbin/free.sh >/dev/null 2>&1
 0 * * * * /usr/bin/autotimesync.sh
 */5 * * * * /www/vnstati/vnstati.sh >/dev/null 2>&1
 0 2 * * * echo "AT+CMGD=1,4" | atinout - "/dev/ttyACM2" -
+0 */6 * * * /etc/init.d/tailscale restart
 0 3 * * * /sbin/reboot"
 
 # Mengganti isi file crontab
