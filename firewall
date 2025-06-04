@@ -3,24 +3,23 @@ config defaults
 	option output 'ACCEPT'
 	option forward 'REJECT'
 	option synflood_protect '1'
+	option drop_invalid '1'
 
 config zone
 	option name 'lan'
+	option network 'lan'
 	option input 'ACCEPT'
 	option output 'ACCEPT'
 	option forward 'ACCEPT'
-	list network 'lan'
 
 config zone
 	option name 'wan'
+	option network 'wan mm'
 	option input 'REJECT'
 	option output 'ACCEPT'
 	option forward 'REJECT'
 	option masq '1'
 	option mtu_fix '1'
-	list network 'wan'
-	list network 'wan6'
-	list network 'mm'
 
 config forwarding
 	option src 'lan'
@@ -133,13 +132,18 @@ config include 'passwall_server'
 	option path '/var/etc/passwall_server.include'
 	option reload '1'
 
+config include 'nikki'
+	option type 'script'
+	option path '/etc/nikki/scripts/firewall_include.sh'
+	option fw4_compatible '1'
+
 config zone
 	option name 'remote'
 	option input 'ACCEPT'
 	option output 'ACCEPT'
 	option forward 'REJECT'
-	list network 'zerotier'
 	list network 'tailscale'
+	list network 'zerotier'
 	option masq '1'
 	option mtu_fix '1'
 
