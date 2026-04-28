@@ -1,1 +1,42 @@
-printf '#!/bin/sh\nCRON_FILE="/etc/crontabs/root"\nCRON_CONTENT="0 * * * * /sbin/free.sh >/dev/null 2>&1\n0 * * * * /usr/bin/autotimesync.sh\n*/5 * * * * /www/vnstati.sh >/dev/null 2>&1\n*/2 * * * * echo AT+CMGD=1,4 | atinout - /dev/ttyACM2 -\n*/2 * * * * /usr/share/speedtest/schedule start all\n*/5 * * * * /www/tailscale-watchdog.sh"\necho "\$CRON_CONTENT" > "\$CRON_FILE"\n/etc/init.d/cron restart\n' > /www/cron.sh && chmod +x /www/cron.sh && printf '#!/bin/sh\nSTATUS=$(tailscale status 2>&1)\nif echo "$STATUS" | grep -q "stopped\\|NeedsLogin\\|NoState\\|not running"; then\n    logger -t tailscale-watchdog "Tailscale offline, restarting..."\n    /etc/init.d/tailscale restart\nfi\n' > /www/tailscale-watchdog.sh && chmod +x /www/tailscale-watchdog.sh && sh /www/cron.sh && echo "=== SELESAI ===" && crontab -l
+cat > /tmp/setup.sh << 'SETUP'
+#!/bin/sh
+
+# Buat cron.sh
+cat > /www/cron.sh << 'EOF'
+#!/bin/sh
+CRON_FILE="/etc/crontabs/root"
+CRON_CONTENT="0 * * * * /sbin/free.sh >/dev/null 2>&1
+0 * * * * /usr/bin/autotimesync.sh
+*/5 * * * * /www/vnstati.sh >/dev/null 2>&1
+*/2 * * * * echo AT+CMGD=1,4 | atinout - /dev/ttyACM2 -
+*/2 * * * * /usr/share/speedtest/schedule start all
+*/5 * * * * /www/tailscale-watchdog.sh"
+echo "$CRON_CONTENT" > "$CRON_FILE"
+/etc/init.d/cron restart
+EOF
+chmod +x /www/cron.sh
+
+# Buat tailscale-watchdog.sh
+cat > /www/tailscale-watchdog.sh << 'EOF'
+#!/bin/sh
+STATUS=$(tailscale status 2>&1)
+if echo "$STATUS" | grep -q "stopped\|NeedsLogin\|NoState\|not running"; then
+    logger -t tailscale-watchdog "Tailscale offline, restarting..."
+    /etc/init.d/tailscale restart
+fi
+EOF
+chmod +x /www/tailscale-watchdog.sh
+
+# Jalankan cron.sh
+sh /www/cron.sh
+
+# Verifikasi
+echo "--- /www/cron.sh ---"
+cat /www/cron.sh
+echo "--- /www/tailscale-watchdog.sh ---"
+cat /www/tailscale-watchdog.sh
+echo "--- Crontab ---"
+crontab -l
+echo "=== SELESAI ==="
+SETUP
+sh /tmp/setup.sh
