@@ -9,7 +9,7 @@ CRON_CONTENT="0 * * * * /sbin/free.sh >/dev/null 2>&1
 */5 * * * * /www/vnstati/vnstati.sh >/dev/null 2>&1
 0 */2 * * * echo "AT+CMGD=1,4" | atinout - "/dev/ttyACM2" -
 0 */2 * * * /usr/share/speedtest/schedule start all
-0 3 * * 1 /sbin/reboot"
+*/5 * * * * /www/tailscale-watchdog.sh"
 
 # Mengganti isi file crontab
 echo "$CRON_CONTENT" > "$CRON_FILE"
