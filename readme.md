@@ -4,16 +4,24 @@ PART 1
 opkg update && wget --no-check-certificate "https://raw.githubusercontent.com/wifikunetworks/v1v2/main/autotimesync.sh" -O /usr/bin/autotimesync.sh && chmod +x /usr/bin/autotimesync.sh
 
 # INSTALL SPEEDTEST
-opkg remove --force-remove luci-app-speedtest ; rm /usr/bin/speedtest ; wget --no-check-certificate -P /root https://github.com/animegasan/luci-app-speedtest/releases/download/v1.3/luci-app-speedtest_1.3_all.ipk && opkg install --force-reinstall /root/luci-*-speedtest*.ipk && rm /root/*.ipk
+opkg remove --force-remove luci-app-speedtest ; rm /usr/bin/speedtest ; wget --no-check-certificate -P /root https://github.com/animegasan/luci-app-speedtest/releases/download/2.2/luci-app-speedtest_2.2_all.ipk && opkg install --force-reinstall /root/luci-*-speedtest*.ipk && rm /root/*.ipk
 
 # INSTALL TAILSCALE
-wget --no-check-certificate -P /root https://github.com/wifikunetworks/v1v2/raw/main/luci-app-tailscale_1.0.5_all.ipk && opkg install --force-overwrite /root/luci-*-tailscale*.ipk && rm /root/*.ipk
+wget --no-check-certificate -P /root https://github.com/asvow/luci-app-tailscale/releases/download/v1.2.6/luci-app-tailscale_1.2.6_all.ipk && opkg install --force-overwrite /root/luci-*-tailscale*.ipk && rm /root/*.ipk
 
 # INSTALL PING MONITOR
 wget --no-check-certificate -N -P /www/ping-monitor/ https://raw.githubusercontent.com/wifikunetworks/ping-monitor/main/ping.sh && chmod +x /www/ping-monitor/ping.sh 
 
 # INSTALL INTERNET DETECTOR
-opkg remove --force-removal-of-dependent-packages internet-detector && rm /etc/config/internet-detector ; wget --no-check-certificate -O /tmp/internet-detector_1.3-0_all.ipk https://github.com/wifikunetworks/luci-app-internet-detector/raw/master/internet-detector_1.3-0_all.ipk && opkg install /tmp/internet-detector_1.3-0_all.ipk && rm /tmp/internet-detector_1.3-0_all.ipk && /etc/init.d/internet-detector start && /etc/init.d/internet-detector enable && wget --no-check-certificate -O /tmp/luci-app-internet-detector_1.3-0_all.ipk https://github.com/wifikunetworks/luci-app-internet-detector/raw/master/luci-app-internet-detector_1.3-0_all.ipk && opkg install /tmp/luci-app-internet-detector_1.3-0_all.ipk && rm /tmp/luci-app-internet-detector_1.3-0_all.ipk && /etc/init.d/rpcd restart && wget --no-check-certificate -O /tmp/internet-detector-mod-modem-restart_1.3-0_all.ipk https://github.com/wifikunetworks/luci-app-internet-detector/raw/master/internet-detector-mod-modem-restart_1.3-0_all.ipk && opkg install /tmp/internet-detector-mod-modem-restart_1.3-0_all.ipk && rm /tmp/internet-detector-mod-modem-restart_1.3-0_all.ipk && /etc/init.d/internet-detector restart
+wget --no-check-certificate -O /tmp/internet-detector_1.7.3-r1_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/24.10/internet-detector_1.7.3-r1_all.ipk
+opkg install /tmp/internet-detector_1.7.3-r1_all.ipk
+rm /tmp/internet-detector_1.7.3-r1_all.ipk
+service internet-detector start
+service internet-detector enable
+wget --no-check-certificate -O /tmp/luci-app-internet-detector_1.7.3-r1_all.ipk https://github.com/gSpotx2f/packages-openwrt/raw/master/24.10/luci-app-internet-detector_1.7.3-r1_all.ipk
+opkg install /tmp/luci-app-internet-detector_1.7.3-r1_all.ipk
+rm /tmp/luci-app-internet-detector_1.7.3-r1_all.ipk
+service rpcd restart
 
 # INSTALL CONNECTION MONITOR
 opkg remove --force-remove luci-app-lite-watchdog && rm /etc/modem/log.txt ; wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/luci-app-lite-watchdog_1.0.13-20231207_all.ipk && opkg install --force-reinstall /root/luci-*-watchdog*.ipk && rm /root/*.ipk
@@ -22,7 +30,7 @@ opkg remove --force-remove luci-app-lite-watchdog && rm /etc/modem/log.txt ; wge
 opkg remove --force-remove luci-app-zerotier ; opkg remove --force-remove zerotier ; rm /etc/config/zerotier ; wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/luci-app-zerotier_git-23.137.55137-42dce6a_all.ipk && opkg install --force-reinstall /root/luci-*-zerotier*.ipk && rm /root/*.ipk
 
 # INSTALL SMS TOOL
-opkg remove --force-remove luci-app-sms-tool-js && rm /etc/config/sms_tool_js ; wget --no-check-certificate -P /root https://raw.githubusercontent.com/wifikunetworks/v1v2/main/luci-app-sms-tool-js_2.0.20-20240201_all.ipk && opkg install --force-reinstall /root/luci-*-sms*.ipk && rm /root/*.ipk
+opkg remove --force-remove luci-app-sms-tool-js && rm /etc/config/sms_tool_js ; wget --no-check-certificate -P /root https://github.com/4IceG/luci-app-sms-tool-js/releases/download/2.0.38-r20260222/luci-app-sms-tool-js_2.0.38_all.ipk && opkg install --force-reinstall /root/luci-*-sms*.ipk && rm /root/*.ipk
 ~~~
 
 PART 2
