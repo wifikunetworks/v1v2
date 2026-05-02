@@ -1,0 +1,15 @@
+
+config speedtest 'schedule'
+	option enable '1'
+	list days '1'
+	list days '2'
+	list days '3'
+	list days '4'
+	list days '5'
+	list days '6'
+	list days '7'
+	option start '0'
+	option stop '0'
+	option frequency '60'
+	option test 'all'
+
